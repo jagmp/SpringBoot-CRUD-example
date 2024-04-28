@@ -18,13 +18,13 @@ public class CountryController {
     CountryService countryService;
 
 
-    @GetMapping()
+    @GetMapping
     public List<Country> getCountries() {
         return countryService.getCountries();
     }
 
     @PostMapping
-    ResponseEntity<Country> addCountry(@RequestBody Country country) {
+    public ResponseEntity<Country> addCountry(@RequestBody Country country) {
         return new ResponseEntity<>(countryService.addCountry(country), HttpStatus.OK);
     }
 
