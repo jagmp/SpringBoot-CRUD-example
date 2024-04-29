@@ -11,21 +11,15 @@ import java.util.List;
 public class CountryServiceImpl implements CountryService {
 
     @Autowired
-    CountryRepository countryRepository;
+    private CountryRepository countryRepository;
 
     @Override
     public Country addCountry(Country country) {
-
-        Country getCountry = countryRepository.findByNameIgnoreCase(country.getName());
-        /* TODO:: fix code */
-          /*if(null != getCountry)
-            try {
-                throw new Exception("Country with name "+getCountry.getName()+" is already exists.");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }*/
-        return getCountry != null ? getCountry : countryRepository.save(country);
-
+        Country existingCountry = countryRepository.findByNameIgnoreCase(country.getName());
+        if (existingCountry != null) {
+            throw new CountryException("Country with name " + country.getName() + " already exists.");
+        }
+        return countryRepository.save(country);
     }
 
     @Override
