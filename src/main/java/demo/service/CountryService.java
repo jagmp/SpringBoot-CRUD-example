@@ -1,4 +1,4 @@
-package com.epam.example.demo.service;
+package demo.service;
 
 import com.epam.example.demo.models.Country;
 
