@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CountryServiceImpl implements CountryService {
@@ -29,13 +30,37 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public Country updateCountry(Country country) {
-        return null;
+    public String updateCountry(Country country) throws Exception {
+        //check if country already there ot not
+        Country existingCountry = getCountry(country.getId());
+
+        // check if already exists or not
+        Country getCountryByName = countryRepository.findByNameIgnoreCase(country.getName());
+
+        try {
+            // check if Ids are same as updating one
+            if (null != getCountryByName && getCountryByName.getId() != country.getId()) {
+                throw new Exception("Country with name " + getCountryByName.getName() + " is already exists.");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+       Country updatedCountry = countryRepository.saveAndFlush(country);
+
+        return "Country " + updatedCountry.getName() + " updated successfully. ";
     }
 
     @Override
-    public String deleteCountry(Country country) {
-        return null;
+    public String deleteCountry(Long id) {
+        Optional<Country> getCountry = countryRepository.findById(id);
+        if (!getCountry.isPresent())
+            new Exception("Country not found with Id " + id);
+
+        countryRepository.delete(getCountry.get());
+
+        return "Country " + getCountry.get().getName() + " deleted successfully. ";
+
     }
 
     @Override

@@ -18,16 +18,32 @@ public class CountryController {
     CountryService countryService;
 
 
-    @GetMapping()
-    public List<Country> getCountries() {
-        return countryService.getCountries();
+    @GetMapping
+    public ResponseEntity<List<Country>> getCountries() throws Exception {
+        return new ResponseEntity<>(countryService.getCountries(), HttpStatus.OK);
+
     }
 
     @PostMapping
-    ResponseEntity<Country> addCountry(@RequestBody Country country) {
+    public ResponseEntity<Country> addCountry(@RequestBody Country country) throws Exception {
         return new ResponseEntity<>(countryService.addCountry(country), HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getCountry(@PathVariable("id") Long id) throws Exception {
+        return new ResponseEntity<>(countryService.getCountry(id), HttpStatus.OK);
+
+    }
+
+    @PutMapping
+    public ResponseEntity<String> updateCountry(@RequestBody Country country) throws Exception {
+        return new ResponseEntity<>(countryService.updateCountry(country), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteCountry(@PathVariable("id") Long id) throws Exception {
+        return new ResponseEntity<>(countryService.deleteCountry(id), HttpStatus.OK);
+    }
 
 
 }
