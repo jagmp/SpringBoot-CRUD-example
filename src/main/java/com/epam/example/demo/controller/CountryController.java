@@ -1,5 +1,6 @@
 package com.epam.example.demo.controller;
 
+import com.epam.example.demo.exception.CountryExistsException;
 import com.epam.example.demo.models.Country;
 import com.epam.example.demo.service.CountryService;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,9 @@ public class CountryController {
         return new ResponseEntity<>(countryService.addCountry(country), HttpStatus.OK);
     }
 
-
+    @ExceptionHandler(CountryExistsException.class)
+    public ResponseEntity countryAlreadyAdded(CountryExistsException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(ex.getMessage());
+    }
 
 }
