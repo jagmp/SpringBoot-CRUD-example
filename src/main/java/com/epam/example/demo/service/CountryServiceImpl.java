@@ -17,7 +17,7 @@ public class CountryServiceImpl implements CountryService {
     public Country addCountry(Country country) {
         Country existingCountry = countryRepository.findByNameIgnoreCase(country.getName());
         if (existingCountry != null) {
-            throw new DuplicateCountryException("Country with name " + country.getName() + " already exists.");
+            throw new CountryException("Country with name " + country.getName() + " already exists.");
         }
         return countryRepository.save(country);
     }

@@ -2,7 +2,7 @@ package com.epam.example.demo.controller;
 
 import com.epam.example.demo.models.Country;
 import com.epam.example.demo.service.CountryService;
-import com.epam.example.demo.service.DuplicateCountryException;
+import com.epam.example.demo.service.CountryException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,8 +28,8 @@ public class CountryController {
         return new ResponseEntity<>(countryService.addCountry(country), HttpStatus.OK);
     }
 
-    @ExceptionHandler(DuplicateCountryException.class)
-    public ResponseEntity<String> handleDuplicateCountryException(DuplicateCountryException ex){
+    @ExceptionHandler(CountryException.class)
+    public ResponseEntity<String> handleDuplicateCountryException(CountryException ex){
             return new ResponseEntity<>(ex.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
