@@ -1,11 +1,13 @@
 package com.epam.example.demo.service;
 
+import com.epam.example.demo.exception.CountryExistsException;
 import com.epam.example.demo.models.Country;
 import com.epam.example.demo.repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class CountryServiceImpl implements CountryService {
@@ -15,17 +17,13 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public Country addCountry(Country country) {
-
         Country getCountry = countryRepository.findByNameIgnoreCase(country.getName());
         /* TODO:: fix code */
-          /*if(null != getCountry)
-            try {
-                throw new Exception("Country with name "+getCountry.getName()+" is already exists.");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }*/
-        return getCountry != null ? getCountry : countryRepository.save(country);
-
+          if(getCountry != null) {
+              throw new CountryExistsException("Country with name " + getCountry.getName() + " is already exists.");
+          } else {
+              return countryRepository.save(country);
+          }
     }
 
     @Override
