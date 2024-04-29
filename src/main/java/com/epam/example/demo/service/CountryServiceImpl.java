@@ -2,27 +2,24 @@ package com.epam.example.demo.service;
 
 import com.epam.example.demo.models.Country;
 import com.epam.example.demo.repository.CountryRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class CountryServiceImpl implements CountryService {
 
-
+    @Autowired
     private CountryRepository countryRepository;
 
     @Override
     public Country addCountry(Country country) {
-
         Country existingCountry = countryRepository.findByNameIgnoreCase(country.getName());
         if (existingCountry != null) {
-            throw new DuplicateCountryException("Country with name " + existingCountry.getName() + " already exists.");
+            throw new DuplicateCountryException("Country with name " + country.getName() + " already exists.");
         }
         return countryRepository.save(country);
-
     }
 
     @Override
