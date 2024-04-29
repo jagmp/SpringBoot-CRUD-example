@@ -1,7 +1,8 @@
-package com.epam.example.demo.service;
+package demo.service;
 
 import com.epam.example.demo.models.Country;
 import com.epam.example.demo.repository.CountryRepository;
+import com.epam.example.demo.util.AlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +16,9 @@ public class CountryServiceImpl implements CountryService {
 
     @Override
     public Country addCountry(Country country) {
-
         Country getCountry = countryRepository.findByNameIgnoreCase(country.getName());
-        /* TODO:: fix code */
-          /*if(null != getCountry)
-            try {
-                throw new Exception("Country with name "+getCountry.getName()+" is already exists.");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }*/
-        return getCountry != null ? getCountry : countryRepository.save(country);
-
+        if (null != getCountry) throw new AlreadyExistsException("Country with name "+getCountry.getName()+" is already exists.");
+        return countryRepository.save(country);
     }
 
     @Override

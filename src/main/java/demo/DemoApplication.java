@@ -1,8 +1,5 @@
-package com.epam.example.demo;
+package demo;
 
-import com.epam.example.demo.models.Country;
-import com.epam.example.demo.service.CountryService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

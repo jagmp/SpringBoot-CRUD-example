@@ -1,4 +1,4 @@
-package com.epam.example.demo.models;
+package demo.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

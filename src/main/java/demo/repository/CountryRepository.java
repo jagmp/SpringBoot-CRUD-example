@@ -1,4 +1,4 @@
-package com.epam.example.demo.repository;
+package demo.repository;
 
 import com.epam.example.demo.models.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
